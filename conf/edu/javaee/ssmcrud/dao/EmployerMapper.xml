@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.javaee.ssmcrud.dao.EmployerMapper">
+  <resultMap id="BaseResultMap" type="edu.javaee.ssmcrud.bean.Employer">
+    <id column="emp_id" jdbcType="INTEGER" property="emp_id" />
+    <result column="emp_name" jdbcType="VARCHAR" property="emp_name" />
+    <result column="emp_gender" jdbcType="CHAR" property="emp_gender" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="dept_id" jdbcType="INTEGER" property="dept_id" />
+  </resultMap>
+  <resultMap id="DeptResultMap" type="edu.javaee.ssmcrud.bean.Employer">
+    <id column="emp_id" jdbcType="INTEGER" property="emp_id" />
+    <result column="emp_name" jdbcType="VARCHAR" property="emp_name" />
+    <result column="emp_gender" jdbcType="CHAR" property="emp_gender" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="dept_id" jdbcType="INTEGER" property="dept_id" />
+    <association property="department" javaType="edu.javaee.ssmcrud.bean.Department">
+      <id column="dept_id" property="deptId" />
+      <result column="dept_name" property="deptName"/>
+    </association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    emp_id, emp_name, emp_gender, email, dept_id
+  </sql>
+  <sql id="Dept_Column_List">
+    e.emp_id, e.emp_name, e.emp_gender, e.email, d.dept_id, d.dept_name
+  </sql>
+  <select id="selectByExample" parameterType="edu.javaee.ssmcrud.bean.EmployerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_emp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_emp
+    where emp_id = #{emp_id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByExampleWithDept" resultMap="DeptResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Dept_Column_List" />
+    from t_emp e left join t_dept d on e.dept_id=d.dept_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithDept" resultMap="DeptResultMap">
+    select
+    <include refid="Dept_Column_List" />
+    from t_emp e left join t_dept d on e.dept_id=d.dept_id
+    where emp_id = #{emp_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_emp
+    where emp_id = #{emp_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="edu.javaee.ssmcrud.bean.EmployerExample">
+    delete from t_emp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="edu.javaee.ssmcrud.bean.Employer">
+    insert into t_emp (emp_id, emp_name, emp_gender, 
+      email, dept_id)
+    values (#{emp_id,jdbcType=INTEGER}, #{emp_name,jdbcType=VARCHAR}, #{emp_gender,jdbcType=CHAR}, 
+      #{email,jdbcType=VARCHAR}, #{dept_id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.javaee.ssmcrud.bean.Employer">
+    insert into t_emp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="emp_id != null">
+        emp_id,
+      </if>
+      <if test="emp_name != null">
+        emp_name,
+      </if>
+      <if test="emp_gender != null">
+        emp_gender,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="dept_id != null">
+        dept_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="emp_id != null">
+        #{emp_id,jdbcType=INTEGER},
+      </if>
+      <if test="emp_name != null">
+        #{emp_name,jdbcType=VARCHAR},
+      </if>
+      <if test="emp_gender != null">
+        #{emp_gender,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_id != null">
+        #{dept_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="edu.javaee.ssmcrud.bean.EmployerExample" resultType="java.lang.Long">
+    select count(*) from t_emp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_emp
+    <set>
+      <if test="record.emp_id != null">
+        emp_id = #{record.emp_id,jdbcType=INTEGER},
+      </if>
+      <if test="record.emp_name != null">
+        emp_name = #{record.emp_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emp_gender != null">
+        emp_gender = #{record.emp_gender,jdbcType=CHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dept_id != null">
+        dept_id = #{record.dept_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_emp
+    set emp_id = #{record.emp_id,jdbcType=INTEGER},
+      emp_name = #{record.emp_name,jdbcType=VARCHAR},
+      emp_gender = #{record.emp_gender,jdbcType=CHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      dept_id = #{record.dept_id,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.javaee.ssmcrud.bean.Employer">
+    update t_emp
+    <set>
+      <if test="emp_name != null">
+        emp_name = #{emp_name,jdbcType=VARCHAR},
+      </if>
+      <if test="emp_gender != null">
+        emp_gender = #{emp_gender,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_id != null">
+        dept_id = #{dept_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where emp_id = #{emp_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.javaee.ssmcrud.bean.Employer">
+    update t_emp
+    set emp_name = #{emp_name,jdbcType=VARCHAR},
+      emp_gender = #{emp_gender,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      dept_id = #{dept_id,jdbcType=INTEGER}
+    where emp_id = #{emp_id,jdbcType=INTEGER}
+  </update>
+</mapper>
