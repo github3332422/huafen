@@ -39,7 +39,7 @@ public class SpringTest {
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("pn", "2")).andReturn();
         //填写默认返回的快捷键是 ctrl + alt + v
         MockHttpServletRequest request = mvcResult.getRequest();
-        PageInfo pageinfo = (PageInfo)request.getAttribute("pageinfo");
+        PageInfo pageinfo = (PageInfo)request.getAttribute("pageInfo");
         System.out.println("总共页码" + pageinfo.getPageNum() + "当前页码" + pageinfo.getPages() + "总的记录数" +pageinfo.getTotal() +pageinfo);
 
     }

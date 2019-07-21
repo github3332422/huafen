@@ -9,14 +9,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="${path}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="${path}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-  
 	<link rel="stylesheet" type="text/css" href="${path}/static/jquery/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${path}/static/jquery/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="${path}/static/jquery/demo.css">
 	<script type="text/javascript" src="${path}/static/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="${path}/static/jquery/jquery.easyui.min.js"></script>															
-	<script type="text/javascript" src="${path}/static/ckeditor/ckeditor.js"></script>     
-    
+	<script type="text/javascript" src="${path}/static/ckeditor/ckeditor.js"></script>
 <title>员工列表</title>
 </head>
 <body>
