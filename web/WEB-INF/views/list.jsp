@@ -7,8 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link href="${path}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="${path}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<link href="${path}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="${path}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="${path}/static/jquery/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${path}/static/jquery/themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="${path}/static/jquery/demo.css">
@@ -46,21 +46,19 @@
 						<th>操作</th>
 					</tr>
 					<c:forEach items="${pageInfo.list}" var="emp">
-					<tr>
-						<th>${emp.empId}</th>
-						<th>${emp.empName}</th>
-						<th>${emp.empGender=="M"?"男":"女"}</th>
-						<th>${emp.email }</th>
-						<th>${emp.department.deptName }</th>
-						<th>
-							<button class="btn btn-primary btn-sm">
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							编辑</button>
-							<button class="btn btn-danger btn-sm">删除</button> 
-							
-						</th>
-					</tr>	
-					
+						<tr>
+							<th>${emp.empId}</th>
+							<th>${emp.empName}</th>
+							<th>${emp.empGender=="M"?"男":"女"}</th>
+							<th>${emp.email }</th>
+							<th>${emp.department.deptName }</th>
+							<th>
+								<button class="btn btn-primary btn-sm">
+								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								编辑</button>
+								<button class="btn btn-danger btn-sm">删除</button>
+							</th>
+						</tr>
 					</c:forEach>
 					
 				</table>
@@ -108,7 +106,6 @@
 				</nav>
 			</div>
 		</div>
-	
 	</div>
 </body>
 </html>

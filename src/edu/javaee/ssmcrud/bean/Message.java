@@ -19,6 +19,24 @@ public class Message {
     //用户要返回给浏览器的数据
     private Map<String,Object> extend = new HashMap<String,Object>();
 
+    public static Message success(){
+        Message result = new Message();
+        result.setStateCode(200);
+        result.setMes("处理成功");
+        return result;
+    }
+
+    public static Message fail(){
+        Message result = new Message();
+        result.setStateCode(400);
+        result.setMes("处理失败");
+        return result;
+    }
+
+    public Message add(String key,Object value){
+        this.getExtend().put(key,value);
+        return this;
+    }
     public int getStateCode() {
         return stateCode;
     }

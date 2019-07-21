@@ -11,14 +11,13 @@
 <html>
 <head>
     <title>lis</title>
-    <link href="${Base_Path}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="${Base_Path}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="${Base_Path}/static/jquery/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="${Base_Path}/static/jquery/themes/icon.css">
-    <link rel="stylesheet" type="text/css" href="${Base_Path}/static/jquery/demo.css">
-    <script type="text/javascript" src="${Base_Path}/static/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="${Base_Path}/static/jquery/jquery.easyui.min.js"></script>
-
+    <script type="text/javascript"
+            src="${Base_Path }/static/js/jquery-1.12.4.min.js"></script>
+    <link
+            href="${Base_Path }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+            rel="stylesheet">
+    <script
+            src="${Base_Path }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container ">

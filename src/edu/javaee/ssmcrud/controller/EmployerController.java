@@ -3,6 +3,7 @@ package edu.javaee.ssmcrud.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.javaee.ssmcrud.bean.Employer;
+import edu.javaee.ssmcrud.bean.Message;
 import edu.javaee.ssmcrud.dao.EmployerMapper;
 import edu.javaee.ssmcrud.services.EmployerServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,10 @@ public class EmployerController {
      * */
     @ResponseBody
     @RequestMapping("/empsJson")
-    public PageInfo getEmpsJson(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
-        PageHelper.startPage(pn,5);
+    public Message getEmpsJson(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
+        PageHelper.startPage(pn,8);
         List<Employer> emps = employerServices.getAllEmployer();
         PageInfo page = new PageInfo(emps,5);
-        return page;
+        return Message.success().add("pageInfo",page);
     }
 }

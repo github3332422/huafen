@@ -6,6 +6,7 @@ import edu.javaee.ssmcrud.bean.Department;
 import edu.javaee.ssmcrud.bean.Employer;
 import edu.javaee.ssmcrud.dao.DepartmentMapper;
 import edu.javaee.ssmcrud.dao.EmployerMapper;
+import edu.javaee.ssmcrud.services.DepartmentServices;
 import edu.javaee.ssmcrud.services.EmployerServices;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -39,6 +40,8 @@ public class DaoTest {
     @Autowired
     EmployerServices employerServices;
     @Autowired
+    DepartmentServices departmentServices;
+    @Autowired
     SqlSession sqlSession;
 //    public static void main(String args[])
     //使用junit测试的时候需要加入junit-4.12.jar
@@ -59,7 +62,8 @@ public class DaoTest {
 //        employerMapper.insertSelective(new Employer(null,"张清","M","47666@qq.com",2));
 
         //批量插入
-        EmployerMapper employerMapper = sqlSession.getMapper(EmployerMapper.class);
+//        EmployerMapper employerMapper = sqlSession.getMapper(EmployerMapper.class);
+        DepartmentMapper departmentMapper = sqlSession.getMapper(DepartmentMapper.class);
 //        for(int i = 0 ; i < 1000 ; i ++){
 //            String uid = UUID.randomUUID().toString().substring(0,5);
 //            employerMapper.insertSelective(new Employer(null,uid+"","M",uid + "@qq.com",2));
@@ -70,13 +74,20 @@ public class DaoTest {
 //            System.out.println(employer);
 //        }
 
-        PageHelper.startPage(1,5);
-        List<Employer> employers = employerServices.getAllEmployer();
-        for (Employer employer:employers){
-            System.out.println(employer);
+//        PageHelper.startPage(1,5);
+//        List<Employer> employers = employerServices.getAllEmployer();
+//        for (Employer employer:employers){
+//            System.out.println(employer);
+//        }
+//        PageInfo pi = new PageInfo(employers,5);
+////        PageInfo<Employer> pi = new PageInfo<>(employers);
+//        System.out.println(pi.getPageNum() + "\t" + pi.getPages() + "\t" + pi.getTotal());
+
+
+        List<Department> list = departmentServices.getAllDepts();
+        for (Department dept:list){
+            System.out.println(dept);
         }
-        PageInfo pi = new PageInfo(employers,5);
-//        PageInfo<Employer> pi = new PageInfo<>(employers);
-        System.out.println(pi.getPageNum() + "\t" + pi.getPages() + "\t" + pi.getTotal());
+
     }
 }
