@@ -11,6 +11,6 @@
     <title>哈哈哈</title>
   </head>
   <body>
-  哈哈哈哈哈哈哈哈哈
+  哈哈哈 这个是欢迎页面 =》 index.jsp
   </body>
 </html>

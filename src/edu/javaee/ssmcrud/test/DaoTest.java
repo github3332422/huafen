@@ -72,7 +72,11 @@ public class DaoTest {
 
         PageHelper.startPage(1,5);
         List<Employer> employers = employerServices.getAllEmployer();
-        PageInfo<Employer> pi = new PageInfo<>(employers);
+        for (Employer employer:employers){
+            System.out.println(employer);
+        }
+        PageInfo pi = new PageInfo(employers,5);
+//        PageInfo<Employer> pi = new PageInfo<>(employers);
         System.out.println(pi.getPageNum() + "\t" + pi.getPages() + "\t" + pi.getTotal());
     }
 }

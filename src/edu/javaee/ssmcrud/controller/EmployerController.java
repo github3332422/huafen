@@ -33,10 +33,15 @@ public class EmployerController {
         Model model){
         PageHelper.startPage(pn,5);
         List<Employer> emps = employerServices.getAllEmployer();
-        System.out.println(emps);
+        for(Employer employer:emps){
+            System.out.println(employer);
+        }
         //PageInfo中包括有我们查询出来的数据
         PageInfo page = new PageInfo(emps,5);
+        System.out.println(page);
         model.addAttribute("pageinfo",page);
+
+
         return "list";
     }
 }
