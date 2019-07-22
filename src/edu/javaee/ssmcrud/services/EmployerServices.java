@@ -10,4 +10,13 @@ public interface EmployerServices {
      * */
     public List<Employer> getAllEmployer();
 
+    /**
+     * 保存用户
+     * */
+    public void saveEmp(Employer employer);
+
+    /**
+     * 删除员工
+     * */
+    public void deleteEmp(Integer id);
 }

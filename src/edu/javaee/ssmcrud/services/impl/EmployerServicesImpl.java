@@ -23,4 +23,14 @@ public class EmployerServicesImpl implements EmployerServices {
     public List<Employer> getAllEmployer() {
         return employerMapper.selectByExampleWithDept(null);
     }
+
+    @Override
+    public void saveEmp(Employer employer) {
+        employerMapper.insertSelective(employer);
+    }
+
+    @Override
+    public void deleteEmp(Integer id) {
+        employerMapper.deleteByPrimaryKey(id);
+    }
 }

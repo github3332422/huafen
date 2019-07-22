@@ -9,9 +9,7 @@ import edu.javaee.ssmcrud.services.EmployerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,4 +54,36 @@ public class EmployerController {
         PageInfo page = new PageInfo(emps,5);
         return Message.success().add("pageInfo",page);
     }
+
+    /**
+     * 执行员工的添加
+     * */
+    @ResponseBody
+    @RequestMapping(value = "emp",method = RequestMethod.POST)
+    public Message getEmpsWithJson(Employer employer){
+        employerServices.saveEmp(employer);
+        return Message.success();
+    }
+
+    /**
+     * 删除单个用户
+     * */
+    @ResponseBody
+    @RequestMapping(value = "/emp/{id}",method = RequestMethod.DELETE)
+    public Message deleteEmpById(@PathVariable("id")Integer id ){
+        employerServices.deleteEmp(id);
+        return Message.success();
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+

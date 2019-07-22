@@ -21,44 +21,45 @@
 </head>
 <body>
 <div class="container ">
-    <!-- 员工添加的模态框 -->
-    <div class="modal fade" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <!-- 员工修改的模态框 -->
+    <div class="modal fade" id="empUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">员工添加</h4>
+                    <h4 class="modal-title">员工修改</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label for="empName_add_input" class="col-sm-2 control-label">empName</label>
+                            <label class="col-sm-2 control-label">empName</label>
                             <div class="col-sm-10">
-                                <input type="text" name="emp_name" class="form-control" id="empName_add_input" placeholder="empName">
+                                <p class="form-control-static" id="empName_update_static"></p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="empEmail_add_input" class="col-sm-2 control-label">empEmail</label>
+                            <label class="col-sm-2 control-label">email</label>
                             <div class="col-sm-10">
-                                <input type="text" name="email" class="form-control" id="empEmail_add_input" placeholder="email@qq.com">
+                                <input type="text" name="email" class="form-control" id="email_update_input" placeholder="email@atguigu.com">
+                                <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="empName_add_input" class="col-sm-2 control-label">empGender</label>
+                            <label class="col-sm-2 control-label">gender</label>
                             <div class="col-sm-10">
                                 <label class="radio-inline">
-                                    <input type="radio" name="emp_gender" id="gender1_add_input" value="M" checked="checked"> 男
+                                    <input type="radio" name="gender" id="gender1_update_input" value="M" checked="checked"> 男
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="emp_gender" id="gender2_add_input" value="F"> 女
+                                    <input type="radio" name="gender" id="gender2_update_input" value="F"> 女
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">empDepartment</label>
+                            <label class="col-sm-2 control-label">deptName</label>
                             <div class="col-sm-4">
-                                <select class="form-control" name="dept_id" id="dept_add_select">
-
+                                <!-- 部门提交部门id即可 -->
+                                <select class="form-control" name="dId">
                                 </select>
                             </div>
                         </div>
@@ -66,11 +67,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" id="emp_save_btn">保存</button>
+                    <button type="button" class="btn btn-primary" id="emp_update_btn">更新</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+
     <!-- 标题栏 -->
     <div class="row">
         <div class=".col-xs-6">
@@ -107,7 +111,6 @@
                 <tbody>
 
                 </tbody>
-
             </table>
         </div>
     </div>
@@ -115,19 +118,68 @@
     <!-- 分页 -->
     <div class="row">
         <div class="col-md-6" id="page_info_message">
-
         </div>
         <div class="col-md-6" id="page_info_nova">
-
         </div>
     </div>
 
+    <!-- 员工添加的模态框 -->
+    <div class="modal fade" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">员工添加</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">empName</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="emp_name" class="form-control" id="empName_add_input" placeholder="empName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="email" class="form-control" id="empEmail_add_input" placeholder="email@qq.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">empGender</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline">
+                                    <input type="radio" name="emp_gender" id="gender1_add_input" value="M" checked="checked"> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="emp_gender" id="gender2_add_input" value="F"> 女
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">empDepartment</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="dept_id" id="dept_add_select">
 
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="emp_save_btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
+    var totalRecord;
     $(function(){
         to_page(1);
-    });
+    })
+    //查询第n页的数据
     function to_page(pn) {
         $.ajax({
             url:"${Base_Path}/empsJson",
@@ -136,6 +188,7 @@
             success:function (result) {
                 // console.log(result);
                 //解析并显示员工数据
+
                 build_emps_table(result);
                 //解析并显示分页数据
                 build_page_info(result)
@@ -143,6 +196,7 @@
             }
         });
     }
+    //把客户信息填写到表格
     function build_emps_table(result) {
         //先进行清空，避免把上回的数据也加上
         $("#emps_table tbody").empty();
@@ -154,8 +208,8 @@
             var empemailTd =  $("<td></td>").append(item.email);
             var empDeptTd =  $("<td></td>").append(item.department.deptName);
 
-            var editButton = $("<button ></button >").addClass("btn btn-warning btn-sm").append("<span></span>").addClass("glyphicon glyphicon-pencil").append("编辑");
-            var delButton = $("<button ></button >").addClass("btn btn-danger btn-sm").append("<span></span>").addClass("glyphicon glyphicon-remove").append("删除");
+            var editButton = $("<button></button>").addClass("btn btn-warning btn-sm edit_btn").append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
+            var delButton = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn").append($("<span></span>").addClass("glyphicon glyphicon-remove")).append("删除");
             var btnTd = $("<td></td>").append(editButton).append(" ").append(delButton);
             $("<tr></tr>").append(empidTd)
                 .append(empnameTd)
@@ -172,6 +226,7 @@
         var str = "当前页"+ result.extend.pageInfo.pageNum+ "总页数" + result.extend.pageInfo.pages+" 总记录数" + result.extend.pageInfo.total;
         var mess = $("<h4></h4>").append(str);
         mess.appendTo("#page_info_message")
+        totalRecord = result.extend.pageInfo.total;
 
     }
     //解析显示分页条
@@ -226,7 +281,6 @@
         var navEle = $("<nav></nav>").append(ul)
         navEle.appendTo("#page_info_nova")
     }
-
     //打开新建模态框
     $("#emp_add_modal_btn").click(function () {
         //查询所有的部门信息
@@ -235,25 +289,49 @@
         $("#empAddModal").modal({
             backdrop:"static"
         })
-    });
+    })
     //查询所有的部门列表
     function getDepts(){
         $.ajax({
             url:"${Base_Path}/depts",
             type:"get",
             success:function (result) {
-                console.log(result)
-                // $.each(result.extend.list,function(){
-                //     var optionEle = $("<option></option>").append(this.deptName).attr("value",this.deptId);
-                //     optionEle.appendTo(ele);
-                // });
-                // optionEls.appendTo("#dept_add_select");
-                // $("#dept_add_select").append()
+                // var emps = result.extend.depts;
+                // $.each(emps,function (index,item) {
+                //     optionEle = $("<option></option>").append(item.deptName).attr("value",item.deptId);
+                //     optionEle.appendTo("#dept_add_select");
+                // })
+                console.log(result);
+                // var optionEle;
             }
         });
     }
-    //执行添加功能
+    //执行添加功能,将模态框中的表单数据提交
+    $("#emp_save_btn").click(function () {
+        //
+        //2.发送ajax请求
+        $.ajax({
+            url:"${Base_Path}/emp",
+            type:"post",
+            data:$("#empAddModal form").serialize(),
+            success:function (result) {
+                // alter(result);
+                //关闭模态框
+                $("#empAddModal").modal("hide");
+                //来到最后一页显示数据
+                to_page(totalRecord);
+            }
+        })
+    })
 
+    //删除客户(单个)
+    $(document).on("click","delete_btn",function () {
+        //1.弹出是否 确认删除对话框
+        alter("Hello World");
+        var empName = $(this).parents("tr").find("td:eq(1)").text();
+        confirm("确认删除【"+empName+"】吗？")
+    });
+    //删除客户(多个)
 </script>
 </body>
 </html>
