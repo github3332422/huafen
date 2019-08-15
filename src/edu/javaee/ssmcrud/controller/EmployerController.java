@@ -38,7 +38,7 @@ public class EmployerController {
 //        }
         //PageInfo中包括有我们查询出来的数据
         PageInfo page = new PageInfo(emps,5);
-        System.out.println(page);
+//        System.out.println(page);
         model.addAttribute("pageInfo",page);
         return "lis";
     }
@@ -59,7 +59,7 @@ public class EmployerController {
      * 执行员工的添加
      * */
     @ResponseBody
-    @RequestMapping(value = "emp",method = RequestMethod.POST)
+    @RequestMapping(value = "/emp",method = RequestMethod.POST)
     public Message getEmpsWithJson(Employer employer){
         employerServices.saveEmp(employer);
         return Message.success();

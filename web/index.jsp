@@ -11,13 +11,9 @@
 <html>
 <head>
     <title>Index</title>
-    <script type="text/javascript"
-            src="${Base_Path }/static/js/jquery-1.12.4.min.js"></script>
-    <link
-            href="${Base_Path }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-            rel="stylesheet">
-    <script
-            src="${Base_Path }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${Base_Path }/static/js/jquery-1.12.4.min.js"></script>
+    <link href="${Base_Path }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="${Base_Path }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container ">
@@ -73,8 +69,6 @@
         </div>
     </div>
 
-
-
     <!-- 标题栏 -->
     <div class="row">
         <div class=".col-xs-6">
@@ -85,7 +79,7 @@
     <!-- 显示按钮 -->
     <div class="row">
         <div class="col-md-3 col-md-offset-0">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#empAddModal">
+            <button type="button" class="btn btn-success" id="emp_add_modal_btn">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
             </button>
             <button type="button" class="btn btn-danger">
@@ -137,12 +131,14 @@
                             <label class="col-sm-2 control-label">empName</label>
                             <div class="col-sm-10">
                                 <input type="text" name="emp_name" class="form-control" id="empName_add_input" placeholder="empName">
+                                <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-10">
                                 <input type="text" name="email" class="form-control" id="empEmail_add_input" placeholder="email@qq.com">
+                                <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
@@ -173,6 +169,7 @@
             </div>
         </div>
     </div>
+
 </div>
 <script type="text/javascript">
     var totalRecord;
@@ -227,41 +224,27 @@
         var mess = $("<h4></h4>").append(str);
         mess.appendTo("#page_info_message")
         totalRecord = result.extend.pageInfo.total;
-
     }
     //解析显示分页条
     function buil_page_nav(result){
         $("#page_info_nova").empty();
         var ul = $("<ul></ul>").addClass("pagination");
-        var fristPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
+        // var fristPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
         var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href","#"));
         if(result.extend.pageInfo.isFirstPage == true){
-            fristPageLi.addClass("disabled");
+            // fristPageLi.addClass("disabled");
             prePageLi.addClass("disabled");
         }
         else{
-            fristPageLi.click(function () {
-                to_page(1);
-            })
+            // fristPageLi.click(function () {
+            //     to_page(1);
+            // })
             prePageLi.click(function () {
                 to_page(result.extend.pageInfo.pageNum-1);
             })
         }
-        var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href","#"));
-        var lastPageLi = $("<li></li>").append($("<a></a>").append("尾页").attr("href","#"));
-        if(result.extend.pageInfo.isLastPage == true){
-            nextPageLi.addClass("disabled");
-            lastPageLi.addClass("disabled");
-        }else{
-            nextPageLi.click(function () {
-                to_page(result.extend.pageInfo.pageNum+1);
-            })
-            lastPageLi.click(function () {
-                to_page(result.extend.pageInfo.pages);
-            })
-        }
-
-        ul.append(fristPageLi).append(prePageLi);
+        //添加首页和前一页
+        ul.append(prePageLi);
         $.each(result.extend.pageInfo.navigatepageNums,function (index,item) {
             var numLi = $("<li></li>").append($("<a></a>").append(item).attr("href","#"));
             //当前页表示禁用
@@ -277,7 +260,21 @@
             ul.append(numLi);
 
         });
-        ul.append(nextPageLi).append(lastPageLi);
+        var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href","#"));
+        var lastPageLi = $("<li></li>").append($("<a></a>").append("尾页").attr("href","#"));
+        if(result.extend.pageInfo.isLastPage == true){
+            nextPageLi.addClass("disabled");
+            lastPageLi.addClass("disabled");
+        }else{
+            nextPageLi.click(function () {
+                to_page(result.extend.pageInfo.pageNum+1);
+            })
+            // lastPageLi.click(function () {
+            //     to_page(result.extend.pageInfo.pages-1);
+            // })
+        }
+        //添加后一页和尾页
+        ul.append(nextPageLi);
         var navEle = $("<nav></nav>").append(ul)
         navEle.appendTo("#page_info_nova")
     }
@@ -289,27 +286,30 @@
         $("#empAddModal").modal({
             backdrop:"static"
         })
-    })
+    });
     //查询所有的部门列表
     function getDepts(){
         $.ajax({
             url:"${Base_Path}/depts",
             type:"get",
             success:function (result) {
-                // var emps = result.extend.depts;
-                // $.each(emps,function (index,item) {
-                //     optionEle = $("<option></option>").append(item.deptName).attr("value",item.deptId);
-                //     optionEle.appendTo("#dept_add_select");
-                // })
                 console.log(result);
-                // var optionEle;
+                $.each(result.extend.depts,function(){
+                    var optionEle = $("<option></option>").append(this.deptName).attr("value",this.deptId);
+                    optionEle.appendTo("#dept_add_select");
+                });
             }
         });
     }
     //执行添加功能,将模态框中的表单数据提交
     $("#emp_save_btn").click(function () {
-        //
-        //2.发送ajax请求
+        //对要发送的请求进行校验:
+        if(!validate_add_form()){
+            return false;
+        };
+
+        //发送ajax请求
+        console.log($("#empAddModal form").serialize());
         $.ajax({
             url:"${Base_Path}/emp",
             type:"post",
@@ -321,11 +321,60 @@
                 //来到最后一页显示数据
                 to_page(totalRecord);
             }
-        })
-    })
-
+        });
+    });
+    //校验表单数据
+    function validate_add_form(){
+        var empName = $("#empName_add_input").val();
+        var regName = /(^[a-zA-Z0-9_-]{3,16}$)|(^[\u2E80-\u9FFF]{2,5}$)/;
+        if(!regName.test(empName)){
+            show_validate_msg("#empName_add_input","success","用户名可以是3-16位数字或英文或者是2-5位中文");
+            // alert("用户名可以是3-16位数字或英文或者是2-5位中文");
+            // $("#empName_add_input").parents().removeClass("has-success has-error");
+            // $("#empEmail_add_input").next("span").text("");
+            // $("#empName_add_input").parents().addClass(".has-error");
+            // $("#empName_add_input").next("span").text("用户名可以是3-16位数字或英文或者是2-5位中文");
+            return false;
+        }else{
+            show_validate_msg("#empName_add_input","error","");
+            // $("#empName_add_input").parents().removeClass("has-success has-error");
+            // $("#empEmail_add_input").next("span").text("");
+            // $("#empName_add_input").parents().addClass(".has-success");
+            // $("#empName_add_input").next("span").text("");
+        }
+        var empEmali = $("#empEmail_add_input").val();
+        var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+        if(!regEmail.test(empEmali)){
+            show_validate_msg("#empEmail_add_input","success","输入的邮箱格式错误");
+            // $("#empEmail_add_input").parents().removeClass("has-success has-error");
+            // $("#empEmail_add_input").next("span").text("");
+            // $("#empEmail_add_input").parents().addClass(".has-error");
+            // $("#empEmail_add_input").next("span").text("输入的邮箱格式错误");
+            return false;
+        }else{
+            show_validate_msg("#empEmail_add_input","error","");
+            // $("#empEmail_add_input").parents().removeClass("has-success has-error");
+            // $("#empEmail_add_input").next("span").text("");
+            // $("#empEmail_add_input").parents().addClass(".has-success");
+            // $("#empEmail_add_input").next("span").text("");
+        }
+        return true;
+    }
+    //对提交的数据进行处理
+    function show_validate_msg(ele,status,msg){
+        //清除原来的校验状态信息
+        $(ele).parents().removeClass("has-success has-error");
+        $(ele).next("span").text("");
+        if("success" == status){
+            $(ele).parents().addClass(".has-success");
+            $(ele).next("span").text(msg);
+        }else if("error" == status){
+            $(ele).parents().addClass(".has-error");
+            $(ele).next("span").text(msg);
+        }
+    }
     //删除客户(单个)
-    $(document).on("click","delete_btn",function () {
+    $(document).on("click","btn btn-danger btn-sm delete_btn",function () {
         //1.弹出是否 确认删除对话框
         alter("Hello World");
         var empName = $(this).parents("tr").find("td:eq(1)").text();
