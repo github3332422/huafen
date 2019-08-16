@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,17 +32,34 @@ public class SpringTest {
     MockMvc mockMvc;
     @Before
     public void initMockMvc(){
-        MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
     @Test
     public void testPage()throws Exception{
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/emps").param("pn", "2")).andReturn();
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/emps").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("pn", "2")).andReturn();
+//        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/empsJson").contentType(MediaType.APPLICATION_FORM_URLENCODED).param("pn", "3")).andReturn();
         //填写默认返回的快捷键是 ctrl + alt + v
         MockHttpServletRequest request = mvcResult.getRequest();
         PageInfo pageinfo = (PageInfo)request.getAttribute("pageInfo");
-        System.out.println("总共页码" + pageinfo.getPageNum() + "当前页码" + pageinfo.getPages() + "总的记录数" +pageinfo.getTotal() +pageinfo);
-
+        System.out.println(pageinfo);
+//        System.out.println("总共页码" + pageinfo.getPageNum() + "当前页码" + pageinfo.getPages() + "总的记录数" +pageinfo.getTotal() +pageinfo);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

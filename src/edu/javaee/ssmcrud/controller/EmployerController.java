@@ -50,7 +50,7 @@ public class EmployerController {
     @ResponseBody
     @RequestMapping("/empsJson")
     public Message getEmpsJson(@RequestParam(value = "pn",defaultValue = "1") Integer pn){
-        PageHelper.startPage(pn,8);
+        PageHelper.startPage(pn,10);
         List<Employer> emps = employerServices.getAllEmployer();
         PageInfo page = new PageInfo(emps,5);
         return Message.success().add("pageInfo",page);
@@ -133,8 +133,6 @@ public class EmployerController {
         }
         return Message.success();
     }
-
-
 }
 
 
